@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLICITAÇÃO</title>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+</head>
+<body>
+    <header>
+        <div class="header-links">
+            <a href="/Home">Home</a>
+            <a href="/Historico">Histórico</a>
+        </div>
+        <div name="logo"></div>
+        <div name="Login">
+            <a href="/Login">img</a>
+        </div>
+    </header>
+
+    <h2>SOLICITAÇÃO</h2>
+    <div class="form-container">
+        <form id="solicitacao-form">
+            <!--<label>Categoria:</label>-->
+            <select class="categoria">
+                <option value="temp" selected disabled>Categoria</option>
+                <option value="buracos">Buracos nas Ruas</option>
+                <option value="iluminacao">Iluminação Pública Defeituosa</option>
+                <option value="descarte">Descarte Irregular de Lixo</option>
+                <option value="vazamento">Vazamento de Água</option>
+                <option value="Outro">Outro</option>
+            </select>
+            <!--<label>Endereço:</label>-->
+            <input type="text" name="endereco" placeholder="Endereco" required>
+            <!--<label>Descrição:</label>-->
+            <textarea name="descricao" placeholder="Descrição"required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('solicitacao-form').addEventListener('submit', async function(e) {
+            e.preventDefault(); 
+
+            var formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('http://localhost:25000/api/solicitacao', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                },
+                    body: JSON.stringify(data)
+            });
+
+
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(result.message); 
+                } else {
+                    alert('Erro ao enviar os dados');
+                }
+            } catch (error) {
+                console.error('Erro ao enviar os dados:', error);
+                alert('Erro ao enviar os dados');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+body {
+    background: #fff;
+    color: #000;
+    text-align: center;
+}
+
+header {
+    background-color: black; 
+    height: 80px; 
+    width: 100%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+}
+
+.header-links {
+    display: flex;
+    gap: 100px; 
+    margin-left: 80px;
+    padding-top: 25px;
+}
+a{
+    color:white;
+    text-decoration: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Cabeçalho */
+/*nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}*/
+
+.logo img {
+    height: 40px;
+}
+
+.login img {
+    height: 30px;
+}
+
+
+/* Título */
+h2 {
+    font-size: 35px;
+    font-weight: bold;
+    margin: 20px 0;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+/* Formulário */
+.form-container {
+    background: #000; /* Fundo preto */
+    color: #fff; /* Texto branco */
+    width: 900px; /* Largura fixa */
+    margin: 20px auto; /* Centralizar na tela */
+    padding: 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o conteúdo */
+    text-align: center; /* Alinha o texto */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+select, input, textarea {
+    width: 700px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+
+select {
+    background: #f2f2f2;
+}
+
+textarea {
+    width: 700px;  /* Ajuste conforme necessário */
+    height: 250px; /* Aumente a altura para caber mais texto */
+    padding: 10px; /* Adiciona espaço interno para o texto não grudar nas bordas */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    resize: none; /* Impede redimensionamento manual */
+    text-align: left; /* Garante que o texto comece à esquerda */
+    vertical-align: top; /* Alinha o conteúdo no topo */
+}
+
+
+button {
+    background: #a89a97;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end;
+    
+}
+
+button:hover {
+    background: #8c7f7c;
+}
+
