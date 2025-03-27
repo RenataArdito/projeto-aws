@@ -15,20 +15,8 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Rota para processar solicitações
-app.post('/solicitacao', (req, res) => {
-    console.log('Recebendo solicitação:', req.body);
-
-    const { categoria, endereco, descricao } = req.body;
-
-    if (!categoria || !endereco || !descricao) {
-        return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
-    }
-
-    res.status(200).json({ message: 'Solicitação recebida com sucesso!' });
-});
-
 // Inicia o servidor
 app.listen(port, '0.0.0.0', () => {
-    console.log(`Servidor rodando na porta ${port}`);
+    console.log(Servidor rodando na porta ${port});
 });
+
