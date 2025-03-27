@@ -51,8 +51,8 @@
 
             const data = { categoria, endereco, descricao };
 
-            // Obtendo o IP da AWS dinamicamente
-            const host = window.location.hostname;  
+            // Substitua pelo IP público da sua instância EC2
+            const host = 'IP_PUBLICO_DA_INSTANCIA_AWS';  // Substitua aqui
             const apiUrl = `http://${host}:8080/api/solicitacao`;
 
             try {
