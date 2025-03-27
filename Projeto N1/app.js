@@ -1,29 +1,50 @@
-const express = require('express'); 
-const bodyParser = require('body-parser'); 
-const cors = require('cors'); 
-const app = express();
-const port = 25000;
+document.getElementById('solicitacao-form').addEventListener('submit', async function(e) {
+    e.preventDefault();  // Impede o envio padrão do formulário
 
-app.use(cors());
-app.use(express.static('public'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); 
+    // Coleta os dados do formulário
+    const categoria = document.getElementById('categoria').value;
+    const endereco = document.getElementById('endereco').value;
+    const descricao = document.getElementById('descricao').value;
 
-app.post('/api/solicitacao', (req, res) => { 
-    const { categoria, endereco, descricao } = req.body;
-
-    if (!categoria || !endereco || !descricao) {
-        return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
+    // Validação simples para garantir que a categoria seja selecionada
+    if (!categoria) {
+        alert("Por favor, selecione uma categoria válida.");
+        return;
     }
 
-    console.log("Dados recebidos do front-end:", req.body); 
+    const data = { categoria, endereco, descricao };
 
-    res.json({
-        message: "Solicitação enviada com sucesso!",
-        user: { categoria, endereco, descricao } 
-    });
-});
+    // Configurar o IP público da sua instância AWS
+    const host = 'IP_PUBLICO_DA_INSTANCIA_AWS';  // Substitua pelo IP público da sua instância EC2
+    const apiUrl = `http://${host}:8080/api/solicitacao`;  // URL para a API no servidor
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Back-end rodando na porta ${port}`);
+    try {
+        // Enviar os dados para a API utilizando fetch
+        const response = await fetch(apiUrl, { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        // Verificar a resposta do servidor
+        console.log("Resposta recebida: ", response);
+        console.log("Status: ", response.status);
+        
+        if (response.ok) {
+            // Se a resposta for bem-sucedida, extrai o JSON da resposta
+            const result = await response.json();
+            alert(result.message);  // Exibe a mensagem de sucesso
+        } else {
+            // Se a resposta for de erro, loga a resposta para mais informações
+            const errorData = await response.json();
+            console.log("Erro na resposta:", errorData);
+            alert('Erro ao enviar os dados');
+        }
+    } catch (error) {
+        // Captura e loga erros de rede ou outros erros
+        console.error('Erro ao enviar os dados:', error);
+        alert('Erro ao enviar os dados');
+    }
 });
