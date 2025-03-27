@@ -64,10 +64,17 @@
                     body: JSON.stringify(data)
                 });
 
+                // Verificar o status da resposta
+                console.log("Resposta recebida: ", response);
+                console.log("Status: ", response.status);
+                
                 if (response.ok) {
                     const result = await response.json();
                     alert(result.message);
                 } else {
+                    // Logar o corpo da resposta para entender o que deu errado
+                    const errorData = await response.json();
+                    console.log("Erro na resposta:", errorData);
                     alert('Erro ao enviar os dados');
                 }
             } catch (error) {
