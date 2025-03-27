@@ -37,6 +37,18 @@
     </div>
 
     <script>
+        async function getPublicIP() {
+            try {
+                const response = await fetch('http://169.254.169.254/latest/meta-data/public-ipv4');
+                if (!response.ok) throw new Error("Não foi possível obter o IP público da instância AWS.");
+                return await response.text();
+            } catch (error) {
+                console.error(error);
+                alert("Erro ao obter o IP da instância. Verifique as permissões da AWS.");
+                return null;
+            }
+        }
+
         document.getElementById('solicitacao-form').addEventListener('submit', async function(e) {
             e.preventDefault(); 
 
@@ -50,9 +62,15 @@
             }
 
             const data = { categoria, endereco, descricao };
+            const ipAWS = await getPublicIP();
+
+            if (!ipAWS) {
+                alert("Erro ao obter o IP da AWS. A solicitação não pode ser enviada.");
+                return;
+            }
 
             try {
-                const response = await fetch('http://3.91.194.189:8080/api/solicitacao', { 
+                const response = await fetch(`http://${ipAWS}:8080/api/solicitacao`, { 
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
