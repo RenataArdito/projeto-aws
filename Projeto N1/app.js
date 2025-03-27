@@ -1,50 +1,48 @@
-document.getElementById('solicitacao-form').addEventListener('submit', async function(e) {
-    e.preventDefault();  // Impede o envio padrão do formulário
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const path = require('path');
 
-    // Coleta os dados do formulário
-    const categoria = document.getElementById('categoria').value;
-    const endereco = document.getElementById('endereco').value;
-    const descricao = document.getElementById('descricao').value;
+const app = express();
+const port = 8080;
 
-    // Validação simples para garantir que a categoria seja selecionada
-    if (!categoria) {
-        alert("Por favor, selecione uma categoria válida.");
-        return;
+// Configuração do CORS
+app.use(cors({
+    origin: '*',  // Permite que qualquer origem acesse a API. Substitua "*" pelo domínio do seu front-end, se necessário.
+}));
+
+// Middleware para aceitar JSON e formulários
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Servir arquivos estáticos (se necessário)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Rota para servir a página HTML principal
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Rota para receber as solicitações do formulário
+app.post('/api/solicitacao', (req, res) => {
+    const { categoria, endereco, descricao } = req.body;
+
+    // Verificação de campos obrigatórios
+    if (!categoria || !endereco || !descricao) {
+        return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
     }
 
-    const data = { categoria, endereco, descricao };
+    // Log dos dados recebidos para depuração
+    console.log("Dados recebidos do front-end:", req.body);
 
-    // Configurar o IP público da sua instância AWS
-    const host = 'IP_PUBLICO_DA_INSTANCIA_AWS';  // Substitua pelo IP público da sua instância EC2
-    const apiUrl = `http://${host}:8080/api/solicitacao`;  // URL para a API no servidor
+    // Envio de resposta de sucesso
+    res.status(200).json({
+        message: "Solicitação enviada com sucesso!",
+        user: { categoria, endereco, descricao }
+    });
+});
 
-    try {
-        // Enviar os dados para a API utilizando fetch
-        const response = await fetch(apiUrl, { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        // Verificar a resposta do servidor
-        console.log("Resposta recebida: ", response);
-        console.log("Status: ", response.status);
-        
-        if (response.ok) {
-            // Se a resposta for bem-sucedida, extrai o JSON da resposta
-            const result = await response.json();
-            alert(result.message);  // Exibe a mensagem de sucesso
-        } else {
-            // Se a resposta for de erro, loga a resposta para mais informações
-            const errorData = await response.json();
-            console.log("Erro na resposta:", errorData);
-            alert('Erro ao enviar os dados');
-        }
-    } catch (error) {
-        // Captura e loga erros de rede ou outros erros
-        console.error('Erro ao enviar os dados:', error);
-        alert('Erro ao enviar os dados');
-    }
+// Iniciar o servidor
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Servidor rodando na porta ${port}`);
 });
