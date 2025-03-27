@@ -53,7 +53,7 @@
 
             // Obtendo o IP da AWS dinamicamente
             const host = window.location.hostname;  
-            const apiUrl = http://${host}:8080/api/solicitacao;
+            const apiUrl = `http://${host}:8080/api/solicitacao`;
 
             try {
                 const response = await fetch(apiUrl, { 
