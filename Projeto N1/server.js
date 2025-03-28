@@ -6,12 +6,12 @@ const path = require('path');
 const app = express();
 const port = 8080;
 
-// Configuração do CORS
+// CORS - libera o servidor de restrições
 app.use(cors({
     origin: '*',
 }));
 
-// Middleware para aceitar JSON e formulários
+// Middleware - para rodar HTTP
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
