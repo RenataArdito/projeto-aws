@@ -12,9 +12,8 @@ document.getElementById('solicitacao-form').addEventListener('submit', async fun
 
     const data = { categoria, endereco, descricao };
 
-    // Altere para o IP público correto do servidor
-    const host = '54.82.121.39';
-    const apiUrl = `http://${host}:8080/api/solicitacao`;
+    // URL do backend na AWS
+    const apiUrl = `http://54.82.121.39:25000/api/solicitacao`;
 
     try {
         const response = await fetch(apiUrl, { 

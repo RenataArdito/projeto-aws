@@ -1,26 +1,20 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const path = require('path');
 
 const app = express();
 const port = 25000;
 
-// CORS
+// CORS - Permite que o front-end acesse a API
 app.use(cors({
-    origin: '*',
+    origin: '*',  // Ou especifique "http://54.82.121.39:8080" se necessário
 }));
 
-// Middleware para aceitar JSON e formulários
+// Middleware para JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
+// Endpoint para receber solicitações
 app.post('/api/solicitacao', (req, res) => {
     const { categoria, endereco, descricao } = req.body;
 
@@ -30,14 +24,13 @@ app.post('/api/solicitacao', (req, res) => {
 
     console.log("Dados recebidos do front-end:", req.body);
 
-    // Envio de resposta de sucesso
     res.status(200).json({
         message: "Solicitação enviada com sucesso!",
         user: { categoria, endereco, descricao }
     });
 });
 
-// Iniciar o servidor
+// Inicia o servidor
 app.listen(port, '0.0.0.0', () => {
-    console.log(`Servidor rodando na porta ${port}`);
+    console.log(`Back-end rodando na porta ${port}`);
 });
