@@ -1,12 +1,12 @@
-# Backend
+# Frontend
 FROM node:14
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY ./public . 
 
 RUN npm install
 
-EXPOSE 25000
+EXPOSE 8080
 
-CMD ["node", "app.js"]
+CMD ["npx", "http-server", "-p", "8080"]
