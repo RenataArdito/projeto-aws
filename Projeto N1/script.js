@@ -13,7 +13,7 @@ document.getElementById('solicitacao-form').addEventListener('submit', async fun
     const data = { categoria, endereco, descricao };
 
     // URL do backend na instância privada da AWS
-    const apiUrl = `http://3.90.248.26:8080`;
+    const apiUrl = `http://10.0.3.11:25000/api/solicitacao`;
 
     try {
         const response = await fetch(apiUrl, { 
