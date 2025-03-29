@@ -6,9 +6,9 @@ const app = express();
 const port = 25000;
 
 // CORS - Permite que o front-end acesse a API
-app.use(cors({
-    origin: 'http://3.90.248.26:8080',  // Substitua pelo IP público da instância pública
-}));
+/*app.use(cors({
+    origin: 'http://3.90.248.26:8080', 
+}));*/
 
 // Middleware para JSON
 app.use(bodyParser.json());
