@@ -7,7 +7,7 @@ const port = 25000;
 
 // CORS - Permite que o front-end acesse a API
 app.use(cors({
-    origin: '*',  // Ou especifique "http://54.82.121.39:8080" se necessário
+    origin: 'http://3.90.248.26:8080',  // Substitua pelo IP público da instância pública
 }));
 
 // Middleware para JSON

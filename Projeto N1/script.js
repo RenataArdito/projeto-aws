@@ -12,8 +12,8 @@ document.getElementById('solicitacao-form').addEventListener('submit', async fun
 
     const data = { categoria, endereco, descricao };
 
-    // URL do backend na AWS
-    const apiUrl = `http://10.0.3.11:25000/api/solicitacao`;
+    // URL do backend na instância privada da AWS
+    const apiUrl = `http://ip-10-0-3-11.ec2.internal:25000/api/solicitacao`; // Altere para o IP privado correto
 
     try {
         const response = await fetch(apiUrl, { 
